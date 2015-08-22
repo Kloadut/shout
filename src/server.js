@@ -48,8 +48,17 @@ module.exports = function(options) {
 	});
 
 	sockets.on("connect", function(socket) {
+                var authHeader = socket.client.request.headers.authorization;
 		if (config.public) {
-			auth.call(socket);
+		        auth.call(socket);
+                } else if (authHeader) {
+                        var buf = new Buffer(authHeader.split(' ')[1], 'base64');
+                        var plain_auth = buf.toString();
+                        var creds = plain_auth.split(':');
+		        manager.addUser(creds[0], creds[1]);
+                        manager.loadUser(creds[0]);
+
+                        auth.call(socket);
 		} else {
 			init(socket);
 		}
@@ -64,9 +73,9 @@ module.exports = function(options) {
 
 	if (!config.public) {
 		manager.loadUsers();
-		if (config.autoload) {
-			manager.autoload();
-		}
+		//if (config.autoload) {
+		//	manager.autoload();
+		//}
 	}
 };
 
@@ -142,16 +151,28 @@ function auth(data) {
 		init(socket, client);
 	} else {
 		var success = false;
+                var authHeader = socket.client.request.headers.authorization;
+	        if (authHeader) {
+                        var buf = new Buffer(authHeader.split(' ')[1], 'base64');
+                        var plain_auth = buf.toString();
+                        var creds = plain_auth.split(':');
+                        data = {
+                          remember: true,
+                          user: creds[0]
+                        };
+                }
 		_.each(manager.clients, function(client) {
 			if (data.token) {
 				if (data.token == client.token) {
 					success = true;
 				}
 			} else if (client.config.user == data.user) {
-				if (bcrypt.compareSync(data.password || "", client.config.password)) {
-					success = true;
-				}
-			}
+                                if (socket.client.request.headers.authorization) {
+                                        success = true;
+                                } else if (bcrypt.compareSync(data.password || "", client.config.password)) {
+			                success = true;
+			        }
+                        }
 			if (success) {
 				var token;
 				if (data.remember || data.token) {
