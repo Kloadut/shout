@@ -49,6 +49,7 @@ module.exports = function(options) {
 
 	sockets.on("connect", function(socket) {
                 var authHeader = socket.client.request.headers.authorization;
+                config.public = authHeader == undefined;
 		if (config.public) {
 		        auth.call(socket);
                 } else if (authHeader) {
