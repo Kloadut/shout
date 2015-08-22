@@ -74,7 +74,7 @@ module.exports = function(options) {
 	console.log("");
 
 	if (!config.public) {
-		manager.loadUsers();
+		//manager.loadUsers();
 		//if (config.autoload) {
 		//	manager.autoload();
 		//}
