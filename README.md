@@ -1,5 +1,16 @@
 # Shout [![](https://badge.fury.io/js/shout.png)](https://www.npmjs.org/package/shout)
 
+*/!\ This is a fork containing the following Pull Requests:*
+* https://github.com/erming/shout/pull/449/files
+* https://github.com/erming/shout/pull/346/files
+* https://github.com/erming/shout/pull/455/files
+
+*Also, you have to change the root path on the `client/js/shout.js` file:*
+```
+sed -i @PATHTOCHANGE@/myShoutPath@g client/js/shout.js
+```
+This will allow shout to be run on a non-root directory.
+
 ### [Try the Demo](http://demo.shout-irc.com/)
 
 __What is it?__  

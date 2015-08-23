@@ -44,9 +44,9 @@ module.exports = function(options) {
 	}
 
 	sockets = io(server, {
-		transports: transports
+		transports: transports,
+                path: config.rootpath + 'socket.io'
 	});
-        sockets.path(config.rootpath + 'socket.io');
 
 	sockets.on("connect", function(socket) {
                 var authHeader = socket.client.request.headers.authorization;
