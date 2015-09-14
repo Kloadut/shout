@@ -28,6 +28,9 @@ module.exports = function(options) {
 	var host = process.env.HOST || config.host;
 	var transports = config.transports || ['websocket', 'polling'];
 
+        console.log(process.env.PORT);
+        console.log(config.port);
+
 	if (!https.enable){
 		server = require("http");
 		server = server.createServer(app).listen(port, host);
