@@ -16,8 +16,8 @@ start = function(options) {
 	config = _.extend(config, options);
 
 	var app = express()
-	        .use(config.rootpath, index)
-	        .use(config.rootpath, express.static("client"));
+	        .use('/', index)
+	        .use('/', express.static("client"));
 
 	app.enable("trust proxy");
 
@@ -45,7 +45,7 @@ start = function(options) {
 
 	sockets = io(server, {
 		transports: transports,
-                path: config.rootpath + 'socket.io'
+                path: '/socket.io'
 	});
 
 	sockets.on("connect", function(socket) {
