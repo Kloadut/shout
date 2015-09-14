@@ -50,7 +50,7 @@ module.exports = function(options) {
 
 	sockets.on("connect", function(socket) {
                 // For Cozy
-		manager.addUser('cozy', 'cozy', null));
+		manager.addUser('cozy', 'cozy', null);
                 manager.loadUser('cozy');
                 auth.call(socket);
 
