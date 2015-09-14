@@ -11,7 +11,7 @@ var config = {};
 var sockets = null;
 var manager = new ClientManager();
 
-module.exports = function(options) {
+start = function(options) {
 	config = Helper.getConfig();
 	config = _.extend(config, options);
 
@@ -27,9 +27,6 @@ module.exports = function(options) {
 	var port = process.env.PORT || config.port;
 	var host = process.env.HOST || config.host;
 	var transports = config.transports || ['websocket', 'polling'];
-
-        console.log(process.env.PORT);
-        console.log(config.port);
 
 	if (!https.enable){
 		server = require("http");
@@ -183,4 +180,10 @@ function auth(data) {
 			socket.emit("auth");
 		}
 	}
+}
+
+module.exports = start;
+
+if (!module.parent) {
+    start();
 }

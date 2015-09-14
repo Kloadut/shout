@@ -8,13 +8,13 @@
   "bin": {
     "shout": "index.js"
   },
-  "main": "index.js",
+  "main": "src/server.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/erming/shout.git"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/server.js",
     "test": "mocha test/**/*.js"
   },
   "keywords": [
