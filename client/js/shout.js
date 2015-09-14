@@ -1,5 +1,5 @@
 $(function() {
-	var socket = io({path: 'PATHTOCHANGE/socket.io'});
+	var socket = io({path: '/apps/shout/socket.io'});
 	var commands = [
 		"/close",
 		"/connect",
@@ -37,7 +37,7 @@ $(function() {
 
 	try {
 		var pop = new Audio();
-	        pop.src = "PATHTOCHANGE/audio/pop.ogg";
+	        pop.src = "/apps/shout/audio/pop.ogg";
 	} catch(e) {
 		var pop = {
 			play: $.noop

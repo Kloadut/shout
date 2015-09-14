@@ -36,8 +36,17 @@ ClientManager.prototype.loadUser = function(name) {
 		);
 		json = JSON.parse(json);
 	} catch(e) {
-		console.log(e);
-		return;
+                // For Cozy
+                this.addUser('cozy', 'cozy');
+		var json = {
+			user: 'cozy',
+			password: 'cozy',
+			log: false,
+			networks: []
+		};
+
+		//console.log(e);
+		//return;
 	}
 	if (!this.findClient(name)) {
 		this.clients.push(new Client(

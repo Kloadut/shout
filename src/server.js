@@ -24,8 +24,8 @@ module.exports = function(options) {
 	var server = null;
 	var https = config.https || {};
 	var protocol = https.enable ? "https" : "http";
-	var port = config.port;
-	var host = config.host;
+	var port = process.env.PORT || config.port;
+	var host = process.env.HOST || config.host;
 	var transports = config.transports || ['websocket', 'polling'];
 
 	if (!https.enable){
@@ -49,21 +49,16 @@ module.exports = function(options) {
 	});
 
 	sockets.on("connect", function(socket) {
-                var authHeader = socket.client.request.headers.authorization;
-                config.public = (authHeader == undefined);
-		if (config.public) {
-		        auth.call(socket);
-                } else if (authHeader) {
-                        var buf = new Buffer(authHeader.split(' ')[1], 'base64');
-                        var plain_auth = buf.toString();
-                        var creds = plain_auth.split(':');
-		        manager.addUser(creds[0], bcrypt.hashSync(creds[1], null));
-                        manager.loadUser(creds[0]);
+                // For Cozy
+		manager.addUser('cozy', 'cozy', null));
+                manager.loadUser('cozy');
+                auth.call(socket);
 
-                        auth.call(socket);
-		} else {
-			init(socket);
-		}
+		//if (config.public) {
+		//        auth.call(socket);
+		//} else {
+		//	init(socket);
+		//}
 	});
 
 	manager.sockets = sockets;
@@ -153,15 +148,11 @@ function auth(data) {
 		init(socket, client);
 	} else {
 		var success = false;
-                var authHeader = socket.client.request.headers.authorization;
-	        if (authHeader) {
-                        var buf = new Buffer(authHeader.split(' ')[1], 'base64');
-                        var plain_auth = buf.toString();
-                        var creds = plain_auth.split(':');
-                        data = {
-                          remember: true,
-                          user: creds[0]
-                        };
+
+                // For Cozy
+                data = {
+                    remember: true,
+                    user: 'cozy'
                 }
 		_.each(manager.clients, function(client) {
 			if (data.token) {
@@ -169,7 +160,8 @@ function auth(data) {
 					success = true;
 				}
 			} else if (client.config.user == data.user) {
-                                if (socket.client.request.headers.authorization) {
+                                // For Cozy
+                                if (data.user == 'cozy') {
                                         success = true;
                                 } else if (bcrypt.compareSync(data.password || "", client.config.password)) {
 			                success = true;
