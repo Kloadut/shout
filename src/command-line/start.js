@@ -28,9 +28,9 @@ program
 			console.log("");
 		} else {
 			shout({
-				host: program.host || process.env.IP   || config.host,
-				port: program.port || process.env.PORT || config.port,
-				bind: program.bind || config.bind,
+				host: process.env.HOST   || config.host,
+				port: process.env.PORT || config.port,
+				bind: config.bind,
 				public: mode
 			});
 		}
