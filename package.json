@@ -1,6 +1,7 @@
 {
   "name": "shout",
   "description": "The self-hosted Web IRC client",
+  "displayName": "Shout IRC",
   "version": "0.51.1",
   "author": "Mattias Erming",
   "preferGlobal": true,
@@ -13,7 +14,7 @@
     "url": "https://github.com/erming/shout.git"
   },
   "scripts": {
-    "start": "node index",
+    "start": "node index.js",
     "test": "mocha test/**/*.js"
   },
   "keywords": [
