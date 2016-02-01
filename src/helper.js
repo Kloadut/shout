@@ -1,9 +1,8 @@
 var path = require("path");
 
 module.exports = {
-        // For Cozy
-        HOME: '/usr/local/cozy/apps/shout/.shout',
 	//HOME: (process.env.HOME || process.env.USERPROFILE) + "/.shout",
+	HOME: process.env.APPLICATION_PERSISTENT_DIRECTORY,
 	getConfig: getConfig
 };
 
